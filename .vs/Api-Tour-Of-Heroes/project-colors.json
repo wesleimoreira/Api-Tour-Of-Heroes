@@ -1,0 +1,31 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "87574794-f874-479d-9a4c-16df7c0d66a3": {
+      "ProjectGuid": "87574794-f874-479d-9a4c-16df7c0d66a3",
+      "DisplayName": "Api-Tour-Of-Heroes-Domain",
+      "ColorIndex": 0
+    },
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Miscellaneous Files",
+      "ColorIndex": -1
+    },
+    "936913d6-6f99-4d3b-bbc0-c057858c537b": {
+      "ProjectGuid": "936913d6-6f99-4d3b-bbc0-c057858c537b",
+      "DisplayName": "Api-Tour-Of-Heroes-Application",
+      "ColorIndex": 1
+    },
+    "f6c05dc5-dbfd-427f-b635-7f3bb99e408a": {
+      "ProjectGuid": "f6c05dc5-dbfd-427f-b635-7f3bb99e408a",
+      "DisplayName": "Api-Tour-Of-Heroes-Infrastructure",
+      "ColorIndex": 2
+    },
+    "47d6c986-4070-4e03-87ef-244670d83ea6": {
+      "ProjectGuid": "47d6c986-4070-4e03-87ef-244670d83ea6",
+      "DisplayName": "App-Tour-Of-Heroes-Apresentation",
+      "ColorIndex": 3
+    }
+  },
+  "NextColorIndex": 4
+}

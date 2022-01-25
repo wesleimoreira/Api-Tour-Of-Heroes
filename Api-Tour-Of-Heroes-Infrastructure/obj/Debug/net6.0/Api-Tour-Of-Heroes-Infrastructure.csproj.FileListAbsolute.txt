@@ -1,0 +1,15 @@
+C:\Users\lei_n\source\repos\Api-Tour-Of-Heroes\Api-Tour-Of-Heroes-Infrastructure\bin\Debug\net6.0\Api-Tour-Of-Heroes-Infrastructure.deps.json
+C:\Users\lei_n\source\repos\Api-Tour-Of-Heroes\Api-Tour-Of-Heroes-Infrastructure\bin\Debug\net6.0\Api-Tour-Of-Heroes-Infrastructure.dll
+C:\Users\lei_n\source\repos\Api-Tour-Of-Heroes\Api-Tour-Of-Heroes-Infrastructure\bin\Debug\net6.0\ref\Api-Tour-Of-Heroes-Infrastructure.dll
+C:\Users\lei_n\source\repos\Api-Tour-Of-Heroes\Api-Tour-Of-Heroes-Infrastructure\bin\Debug\net6.0\Api-Tour-Of-Heroes-Infrastructure.pdb
+C:\Users\lei_n\source\repos\Api-Tour-Of-Heroes\Api-Tour-Of-Heroes-Infrastructure\bin\Debug\net6.0\Api-Tour-Of-Heroes-Domain.dll
+C:\Users\lei_n\source\repos\Api-Tour-Of-Heroes\Api-Tour-Of-Heroes-Infrastructure\bin\Debug\net6.0\Api-Tour-Of-Heroes-Domain.pdb
+C:\Users\lei_n\source\repos\Api-Tour-Of-Heroes\Api-Tour-Of-Heroes-Infrastructure\obj\Debug\net6.0\Api-Tour-Of-Heroes-Infrastructure.csproj.AssemblyReference.cache
+C:\Users\lei_n\source\repos\Api-Tour-Of-Heroes\Api-Tour-Of-Heroes-Infrastructure\obj\Debug\net6.0\Api-Tour-Of-Heroes-Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\lei_n\source\repos\Api-Tour-Of-Heroes\Api-Tour-Of-Heroes-Infrastructure\obj\Debug\net6.0\Api-Tour-Of-Heroes-Infrastructure.AssemblyInfoInputs.cache
+C:\Users\lei_n\source\repos\Api-Tour-Of-Heroes\Api-Tour-Of-Heroes-Infrastructure\obj\Debug\net6.0\Api-Tour-Of-Heroes-Infrastructure.AssemblyInfo.cs
+C:\Users\lei_n\source\repos\Api-Tour-Of-Heroes\Api-Tour-Of-Heroes-Infrastructure\obj\Debug\net6.0\Api-Tour-Of-Heroes-Infrastructure.csproj.CoreCompileInputs.cache
+C:\Users\lei_n\source\repos\Api-Tour-Of-Heroes\Api-Tour-Of-Heroes-Infrastructure\obj\Debug\net6.0\Api-Tour-Of-Heroes-Infrastructure.csproj.CopyComplete
+C:\Users\lei_n\source\repos\Api-Tour-Of-Heroes\Api-Tour-Of-Heroes-Infrastructure\obj\Debug\net6.0\Api-Tour-Of-Heroes-Infrastructure.dll
+C:\Users\lei_n\source\repos\Api-Tour-Of-Heroes\Api-Tour-Of-Heroes-Infrastructure\obj\Debug\net6.0\ref\Api-Tour-Of-Heroes-Infrastructure.dll
+C:\Users\lei_n\source\repos\Api-Tour-Of-Heroes\Api-Tour-Of-Heroes-Infrastructure\obj\Debug\net6.0\Api-Tour-Of-Heroes-Infrastructure.pdb

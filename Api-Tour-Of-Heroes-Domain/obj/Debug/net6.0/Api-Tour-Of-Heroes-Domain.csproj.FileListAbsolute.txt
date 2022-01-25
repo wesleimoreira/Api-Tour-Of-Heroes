@@ -1,0 +1,13 @@
+C:\Users\lei_n\source\repos\Api-Tour-Of-Heroes\Api-Tour-Of-Heroes-Domain\bin\Debug\net6.0\Api-Tour-Of-Heroes-Domain.deps.json
+C:\Users\lei_n\source\repos\Api-Tour-Of-Heroes\Api-Tour-Of-Heroes-Domain\bin\Debug\net6.0\Api-Tour-Of-Heroes-Domain.runtimeconfig.json
+C:\Users\lei_n\source\repos\Api-Tour-Of-Heroes\Api-Tour-Of-Heroes-Domain\bin\Debug\net6.0\Api-Tour-Of-Heroes-Domain.dll
+C:\Users\lei_n\source\repos\Api-Tour-Of-Heroes\Api-Tour-Of-Heroes-Domain\bin\Debug\net6.0\ref\Api-Tour-Of-Heroes-Domain.dll
+C:\Users\lei_n\source\repos\Api-Tour-Of-Heroes\Api-Tour-Of-Heroes-Domain\bin\Debug\net6.0\Api-Tour-Of-Heroes-Domain.pdb
+C:\Users\lei_n\source\repos\Api-Tour-Of-Heroes\Api-Tour-Of-Heroes-Domain\obj\Debug\net6.0\Api-Tour-Of-Heroes-Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\lei_n\source\repos\Api-Tour-Of-Heroes\Api-Tour-Of-Heroes-Domain\obj\Debug\net6.0\Api-Tour-Of-Heroes-Domain.AssemblyInfoInputs.cache
+C:\Users\lei_n\source\repos\Api-Tour-Of-Heroes\Api-Tour-Of-Heroes-Domain\obj\Debug\net6.0\Api-Tour-Of-Heroes-Domain.AssemblyInfo.cs
+C:\Users\lei_n\source\repos\Api-Tour-Of-Heroes\Api-Tour-Of-Heroes-Domain\obj\Debug\net6.0\Api-Tour-Of-Heroes-Domain.csproj.CoreCompileInputs.cache
+C:\Users\lei_n\source\repos\Api-Tour-Of-Heroes\Api-Tour-Of-Heroes-Domain\obj\Debug\net6.0\Api-Tour-Of-Heroes-Domain.dll
+C:\Users\lei_n\source\repos\Api-Tour-Of-Heroes\Api-Tour-Of-Heroes-Domain\obj\Debug\net6.0\ref\Api-Tour-Of-Heroes-Domain.dll
+C:\Users\lei_n\source\repos\Api-Tour-Of-Heroes\Api-Tour-Of-Heroes-Domain\obj\Debug\net6.0\Api-Tour-Of-Heroes-Domain.pdb
+C:\Users\lei_n\source\repos\Api-Tour-Of-Heroes\Api-Tour-Of-Heroes-Domain\obj\Debug\net6.0\Api-Tour-Of-Heroes-Domain.genruntimeconfig.cache
