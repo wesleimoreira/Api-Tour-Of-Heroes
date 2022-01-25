@@ -15,15 +15,37 @@ namespace App_Tour_Of_Heroes_Apresentation.Controllers
         /// Returns a list of heroes
         /// </summary>       
         [HttpGet]
-        public async Task<ActionResult<List<HeroViewModel>>> GetAllAsync()
+        public async Task<IActionResult> GetAllAsync()
         {
             try
             {
-                return Ok(this.Mapper.Map<List<HeroViewModel>>(await this.HeroRepository.GetAllAsync()));
+                var listOfHeroes = this.Mapper.Map<List<HeroViewModel>>(await this.HeroRepository.GetAllAsync());
+
+                if (listOfHeroes.Count == 0 || listOfHeroes == null)
+                {
+                    return NotFound(new
+                    {
+                        status = StatusCodes.Status404NotFound,
+                        message = "Hero list not found.",
+                        data = Array.Empty<HeroViewModel>()
+                    });
+                }
+
+                return Ok(new
+                {
+                    status = StatusCodes.Status200OK,
+                    message = "list of heroes successfully found.",
+                    data = listOfHeroes
+                });
             }
-            catch
+            catch (Exception ex)
             {
-                return NotFound();
+                return BadRequest(new
+                {
+                    status = StatusCodes.Status400BadRequest,
+                    message = ex.Message,
+                    data = Array.Empty<HeroViewModel>()
+                });
             }
         }
 
@@ -31,16 +53,38 @@ namespace App_Tour_Of_Heroes_Apresentation.Controllers
         /// Returns a hero by id
         /// </summary>
         /// <param name="id"></param>      
-        [HttpGet("{id}")]
-        public async Task<ActionResult<HeroViewModel>> GetByIdAsync(int id)
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> GetByIdAsync(int id)
         {
             try
             {
-                return Ok(this.Mapper.Map<HeroViewModel>(await this.HeroRepository.GetByIdAsync(id)));
+                var hero = this.Mapper.Map<HeroViewModel>(await this.HeroRepository.GetByIdAsync(id));
+
+                if (hero == null)
+                {
+                    return NotFound(new
+                    {
+                        status = StatusCodes.Status404NotFound,
+                        message = "hero not found",
+                        dado = new object()
+                    });
+                }
+
+                return Ok(new
+                {
+                    status = StatusCodes.Status200OK,
+                    message = "hero successfully found",
+                    dado = hero
+                });
             }
-            catch
+            catch (Exception ex)
             {
-                return NotFound();
+                return BadRequest(new
+                {
+                    status = StatusCodes.Status400BadRequest,
+                    message = ex.Message,
+                    dado = new object()
+                });
             }
         }
 
@@ -49,15 +93,37 @@ namespace App_Tour_Of_Heroes_Apresentation.Controllers
         /// </summary>
         /// <param name="model"></param>       
         [HttpPost]
-        public async Task<ActionResult<int>> CreateAsync(HeroViewModel model)
+        public async Task<IActionResult> CreateAsync(HeroViewModel model)
         {
             try
             {
-                return Ok(await this.HeroRepository.CreateAsync(this.Mapper.Map<Hero>(model)));
+                var createHero = await this.HeroRepository.CreateAsync(this.Mapper.Map<Hero>(model));
+
+                if (createHero != 1)
+                {
+                    return BadRequest(new
+                    {
+                        status = StatusCodes.Status400BadRequest,
+                        message = "it was not possible to register the hero",
+                        dado = new object()
+                    });
+                }
+
+                return Ok(new
+                {
+                    status = StatusCodes.Status201Created,
+                    message = "hero created successfully",
+                    dado = model
+                });
             }
-            catch
+            catch (Exception ex)
             {
-                return BadRequest();
+                return BadRequest(new
+                {
+                    status = StatusCodes.Status400BadRequest,
+                    message = ex.Message,
+                    dado = new object()
+                });
             }
         }
 
@@ -66,15 +132,37 @@ namespace App_Tour_Of_Heroes_Apresentation.Controllers
         /// </summary>
         /// <param name="model"></param>       
         [HttpPut]
-        public async Task<ActionResult<int>> UpdateAsync(HeroViewModel model)
+        public async Task<IActionResult> UpdateAsync(HeroViewModel model)
         {
             try
             {
-                return Ok(await this.HeroRepository.UpdateAsync(this.Mapper.Map<Hero>(model)));
+                var updateHero = await this.HeroRepository.UpdateAsync(this.Mapper.Map<Hero>(model));
+
+                if (updateHero != 1)
+                {
+                    return NotFound(new
+                    {
+                        status = StatusCodes.Status404NotFound,
+                        message = "could not update hero.",
+                        dado = new object()
+                    });
+                }
+
+                return Ok(new
+                {
+                    status = StatusCodes.Status200OK,
+                    message = "hero successfully updated",
+                    dado = model
+                });
             }
-            catch
+            catch (Exception ex)
             {
-                return BadRequest();
+                return BadRequest(new
+                {
+                    status = StatusCodes.Status400BadRequest,
+                    message = ex.Message,
+                    dado = new object()
+                });
             }
         }
 
@@ -83,15 +171,37 @@ namespace App_Tour_Of_Heroes_Apresentation.Controllers
         /// </summary>
         /// <param name="model"></param>        
         [HttpDelete]
-        public async Task<ActionResult<int>> DeleteAsync(HeroViewModel model)
+        public async Task<IActionResult> DeleteAsync(HeroViewModel model)
         {
             try
             {
-                return Ok(await this.HeroRepository.DeleteAsync(this.Mapper.Map<Hero>(model)));
+                var deleteHero = await this.HeroRepository.DeleteAsync(this.Mapper.Map<Hero>(model));
+
+                if (deleteHero != 1)
+                {
+                    return NotFound(new
+                    {
+                        status = StatusCodes.Status404NotFound,
+                        message = "could not delete hero.",
+                        dado = new object()
+                    });
+                }
+
+                return Ok(new
+                {
+                    status = StatusCodes.Status200OK,
+                    message = "hero successfully deleted",
+                    dado = model
+                });
             }
-            catch
+            catch (Exception ex)
             {
-                return BadRequest();
+                return BadRequest(new
+                {
+                    status = StatusCodes.Status400BadRequest,
+                    message = ex.Message,
+                    dado = new object()
+                });
             }
         }
     }

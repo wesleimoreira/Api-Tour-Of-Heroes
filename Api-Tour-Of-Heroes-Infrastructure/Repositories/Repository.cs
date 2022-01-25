@@ -25,7 +25,7 @@ namespace Api_Tour_Of_Heroes_Infrastructure.Repositories
         }
 
         public virtual async Task<int> CreateAsync(TEntity entity)
-        {
+        {         
             await this._context.Set<TEntity>().AddAsync(entity);
             return await this._context.SaveChangesAsync();
         }
