@@ -2,7 +2,7 @@
 
 namespace Api_Tour_Of_Heroes_Domain.Interfaces
 {
-    public interface IHeroRepositoty: IRepository<Hero>
+    public interface IUserRepository : IRepository<User>
     {
 
     }

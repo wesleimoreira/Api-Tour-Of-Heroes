@@ -9,6 +9,7 @@ namespace Api_Tour_Of_Heroes_Application.Mappings
         public AutoMapping()
         {
             CreateMap<Hero, HeroViewModel>().ReverseMap();
+            CreateMap<User, UserViewModel>().ReverseMap();
         }
     }
 }

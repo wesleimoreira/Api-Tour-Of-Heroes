@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>App-Tour-Of-Heroes-Apresentation</name>
+    </assembly>
+    <members>
+        <member name="M:App_Tour_Of_Heroes_Apresentation.Controllers.HeroController.GetAllAsync">
+            <summary>
+            Returns a list of heroes
+            </summary>       
+        </member>
+        <member name="M:App_Tour_Of_Heroes_Apresentation.Controllers.HeroController.GetByIdAsync(System.Int32)">
+            <summary>
+            Returns a hero by id
+            </summary>
+            <param name="id"></param>      
+        </member>
+        <member name="M:App_Tour_Of_Heroes_Apresentation.Controllers.HeroController.CreateAsync(System.String)">
+            <summary>
+            create a hero
+            </summary>
+            <param name="name"></param>      
+        </member>
+        <member name="M:App_Tour_Of_Heroes_Apresentation.Controllers.HeroController.UpdateAsync(Api_Tour_Of_Heroes_Application.ViewModels.HeroViewModel)">
+            <summary>
+            Update a hero
+            </summary>
+            <param name="model"></param>       
+        </member>
+        <member name="M:App_Tour_Of_Heroes_Apresentation.Controllers.HeroController.DeleteAsync(System.Int32)">
+            <summary>
+            Remove a hero
+            </summary>
+            <param name="id"></param>       
+        </member>
+        <member name="M:App_Tour_Of_Heroes_Apresentation.Controllers.UserController.GetAllAsync">
+            <summary>
+            Returns a list of User
+            </summary>       
+        </member>
+        <member name="M:App_Tour_Of_Heroes_Apresentation.Controllers.UserController.GetByIdAsync(System.Int32)">
+            <summary>
+            Returns a User by id
+            </summary>
+            <param name="id"></param>      
+        </member>
+        <member name="M:App_Tour_Of_Heroes_Apresentation.Controllers.UserController.CreateAsync(System.String,System.String,System.String)">
+            <summary>
+            create a User
+            </summary>
+            <param name="userName"></param>
+            <param name="password"></param>
+            <param name="role"></param>     
+        </member>
+        <member name="M:App_Tour_Of_Heroes_Apresentation.Controllers.UserController.UpdateAsync(Api_Tour_Of_Heroes_Application.ViewModels.UserViewModel)">
+            <summary>
+            Update a User
+            </summary>
+            <param name="model"></param>       
+        </member>
+        <member name="M:App_Tour_Of_Heroes_Apresentation.Controllers.UserController.DeleteAsync(System.Int32)">
+            <summary>
+            Remove a hero
+            </summary>
+            <param name="id"></param>      
+        </member>
+    </members>
+</doc>

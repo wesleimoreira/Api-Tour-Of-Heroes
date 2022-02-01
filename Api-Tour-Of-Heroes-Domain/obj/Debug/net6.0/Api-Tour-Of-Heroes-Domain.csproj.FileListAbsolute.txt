@@ -11,3 +11,4 @@ C:\Users\lei_n\source\repos\Api-Tour-Of-Heroes\Api-Tour-Of-Heroes-Domain\obj\Deb
 C:\Users\lei_n\source\repos\Api-Tour-Of-Heroes\Api-Tour-Of-Heroes-Domain\obj\Debug\net6.0\ref\Api-Tour-Of-Heroes-Domain.dll
 C:\Users\lei_n\source\repos\Api-Tour-Of-Heroes\Api-Tour-Of-Heroes-Domain\obj\Debug\net6.0\Api-Tour-Of-Heroes-Domain.pdb
 C:\Users\lei_n\source\repos\Api-Tour-Of-Heroes\Api-Tour-Of-Heroes-Domain\obj\Debug\net6.0\Api-Tour-Of-Heroes-Domain.genruntimeconfig.cache
+C:\Users\lei_n\source\repos\Api-Tour-Of-Heroes\Api-Tour-Of-Heroes-Domain\obj\Debug\net6.0\Api-Tour-Of-Heroes-Domain.csproj.AssemblyReference.cache

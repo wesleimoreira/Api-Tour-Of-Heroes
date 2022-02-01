@@ -4,7 +4,7 @@ using Api_Tour_Of_Heroes_Domain.Interfaces;
 
 namespace Api_Tour_Of_Heroes_Infrastructure.Repositories
 {
-    public class HeroRepository : Repository<Hero>, IHeroRepositoty
+    public class HeroRepository : Repository<Hero>, IHeroRepository
     {
         public HeroRepository(DataContext context) : base(context) { }
     }

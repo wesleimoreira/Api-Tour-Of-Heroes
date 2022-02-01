@@ -1,9 +1,12 @@
-﻿using Api_Tour_Of_Heroes_Domain.Data;
+﻿using System.Text;
 using Microsoft.EntityFrameworkCore;
+using Api_Tour_Of_Heroes_Domain.Data;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Configuration;
 using Api_Tour_Of_Heroes_Domain.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using Api_Tour_Of_Heroes_Infrastructure.Repositories;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace Api_Tour_Of_Heroes_Infrastructure.DependencyInjections
 {
@@ -18,7 +21,25 @@ namespace Api_Tour_Of_Heroes_Infrastructure.DependencyInjections
                 options.UseSqlServer(config.GetConnectionString("StringConnection"));
             });
 
-            services.AddScoped<IHeroRepositoty, HeroRepository>();
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(x =>
+            {
+                x.RequireHttpsMetadata = false;
+                x.SaveToken = true;
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(config.GetSection("JWTSECRET").Value)),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            });
+
+            services.AddScoped<IHeroRepository, HeroRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
         }
     }
 }

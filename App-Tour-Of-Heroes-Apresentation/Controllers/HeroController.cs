@@ -1,20 +1,22 @@
-﻿using Api_Tour_Of_Heroes_Application.ViewModels;
-using Api_Tour_Of_Heroes_Domain.Entities;
-using Api_Tour_Of_Heroes_Domain.Interfaces;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Api_Tour_Of_Heroes_Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
+using Api_Tour_Of_Heroes_Domain.Interfaces;
+using Api_Tour_Of_Heroes_Application.ViewModels;
 
 namespace App_Tour_Of_Heroes_Apresentation.Controllers
 {
     public class HeroController : BaseController
     {
-        public HeroController(IHeroRepositoty heroRepository, IMapper mapper) : base(heroRepository, mapper)
+        public HeroController(IUserRepository userRepository, IHeroRepository heroRepository, IMapper mapper) : base(userRepository, heroRepository, mapper)
         { }
 
         /// <summary>
         /// Returns a list of heroes
         /// </summary>       
-        [HttpGet]
+        [AllowAnonymous]
+        [HttpGet("heroes-list")]
         public async Task<IActionResult> GetAllAsync()
         {
             try
@@ -53,8 +55,9 @@ namespace App_Tour_Of_Heroes_Apresentation.Controllers
         /// Returns a hero by id
         /// </summary>
         /// <param name="id"></param>      
-        [HttpGet("{id:int}")]
-        public async Task<IActionResult> GetByIdAsync(int id)
+        [AllowAnonymous]
+        [HttpGet("hero/{id:int}")]
+        public async Task<IActionResult> GetByIdAsync([FromRoute] int id)
         {
             try
             {
@@ -91,13 +94,15 @@ namespace App_Tour_Of_Heroes_Apresentation.Controllers
         /// <summary>
         /// create a hero
         /// </summary>
-        /// <param name="model"></param>       
-        [HttpPost]
-        public async Task<IActionResult> CreateAsync(HeroViewModel model)
+        /// <param name="name"></param>      
+        [HttpPost("create-hero")]
+        public async Task<IActionResult> CreateAsync([FromQuery] string name)
         {
             try
             {
-                var createHero = await this.HeroRepository.CreateAsync(this.Mapper.Map<Hero>(model));
+                var newHero = new HeroViewModel { Name = name };
+
+                var createHero = await this.HeroRepository.CreateAsync(this.Mapper.Map<Hero>(newHero));
 
                 if (createHero != 1)
                 {
@@ -113,7 +118,7 @@ namespace App_Tour_Of_Heroes_Apresentation.Controllers
                 {
                     status = StatusCodes.Status201Created,
                     message = "hero created successfully",
-                    dado = model
+                    dado = newHero
                 });
             }
             catch (Exception ex)
@@ -131,8 +136,8 @@ namespace App_Tour_Of_Heroes_Apresentation.Controllers
         /// Update a hero
         /// </summary>
         /// <param name="model"></param>       
-        [HttpPut]
-        public async Task<IActionResult> UpdateAsync(HeroViewModel model)
+        [HttpPut("update-hero")]
+        public async Task<IActionResult> UpdateAsync([FromQuery] HeroViewModel model)
         {
             try
             {
@@ -169,15 +174,17 @@ namespace App_Tour_Of_Heroes_Apresentation.Controllers
         /// <summary>
         /// Remove a hero
         /// </summary>
-        /// <param name="model"></param>        
-        [HttpDelete]
-        public async Task<IActionResult> DeleteAsync(HeroViewModel model)
+        /// <param name="id"></param>       
+        [HttpDelete("delete-hero/{id:int}")]
+        public async Task<IActionResult> DeleteAsync([FromRoute] int id)
         {
             try
             {
-                var deleteHero = await this.HeroRepository.DeleteAsync(this.Mapper.Map<Hero>(model));
+                var deleteHero = new HeroViewModel { Id = id };
 
-                if (deleteHero != 1)
+                var isDeleteHero = await this.HeroRepository.DeleteAsync(this.Mapper.Map<Hero>(deleteHero));
+
+                if (isDeleteHero != 1)
                 {
                     return NotFound(new
                     {
@@ -191,7 +198,7 @@ namespace App_Tour_Of_Heroes_Apresentation.Controllers
                 {
                     status = StatusCodes.Status200OK,
                     message = "hero successfully deleted",
-                    dado = model
+                    dado = deleteHero
                 });
             }
             catch (Exception ex)
