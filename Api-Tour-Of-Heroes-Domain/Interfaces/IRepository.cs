@@ -1,4 +1,5 @@
 ﻿using Api_Tour_Of_Heroes_Domain.Entities;
+using System.Linq.Expressions;
 
 namespace Api_Tour_Of_Heroes_Domain.Interfaces
 {
@@ -8,6 +9,6 @@ namespace Api_Tour_Of_Heroes_Domain.Interfaces
         Task<TEntity> GetByIdAsync(int id);
         Task<int> CreateAsync(TEntity entity);
         Task<int> UpdateAsync(TEntity entity);
-        Task<int> DeleteAsync(TEntity entity);
+        Task<int> DeleteAsync(TEntity entity);       
     }
 }

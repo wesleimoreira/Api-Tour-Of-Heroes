@@ -1,9 +1,9 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
+﻿using Api_Tour_Of_Heroes_Application.ViewModels;
 using Api_Tour_Of_Heroes_Domain.Entities;
-using Microsoft.AspNetCore.Authorization;
 using Api_Tour_Of_Heroes_Domain.Interfaces;
-using Api_Tour_Of_Heroes_Application.ViewModels;
+using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace App_Tour_Of_Heroes_Apresentation.Controllers
 {
@@ -14,80 +14,55 @@ namespace App_Tour_Of_Heroes_Apresentation.Controllers
 
         /// <summary>
         /// Returns a list of User
-        /// </summary>       
+        /// </summary>      
+        /// <returns> retorna uma lista de usuários </returns>
+        /// <response code="200"> Retorna a lista </response>        
+        /// <response code="404"> Não possui usuários cadastrados </response>
         [AllowAnonymous]
         [HttpGet("user-list")]
+        [ProducesResponseTypeAttribute(typeof(EstruturaResponse), StatusCodes.Status200OK)]
+        [ProducesResponseTypeAttribute(typeof(EstruturaResponse), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetAllAsync()
         {
             try
             {
-                var listOfUser = this.Mapper.Map<List<UserViewModel>>(await this.UserRepository.GetAllAsync());
+                var listOfUser = this.Mapper.Map<IEnumerable<UserViewModel>>(await this.UserRepository.GetAllAsync());
 
-                if (listOfUser.Count == 0 || listOfUser == null)
-                {
-                    return NotFound(new
-                    {
-                        status = StatusCodes.Status404NotFound,
-                        message = "User list not found.",
-                        data = Array.Empty<UserViewModel>()
-                    });
-                }
+                if (listOfUser.Any()) return ResponseOk(listOfUser);
 
-                return Ok(new
-                {
-                    status = StatusCodes.Status200OK,
-                    message = "list of User successfully found.",
-                    data = listOfUser
-                });
+                return ResponseNotFound("Não possui Usuários cadastrados!");
+
             }
             catch (Exception ex)
             {
-                return BadRequest(new
-                {
-                    status = StatusCodes.Status400BadRequest,
-                    message = ex.Message,
-                    data = Array.Empty<UserViewModel>()
-                });
+                return ResponseBadRequest(ex.Message);
             }
         }
 
         /// <summary>
         /// Returns a User by id
         /// </summary>
-        /// <param name="id"></param>      
+        /// <param name="id"></param>     
+        /// <returns> retorna o usuário solicitado </returns>
+        /// <response code="200"> retorna o usuário </response>        
+        /// <response code="404"> Não possui usuários cadastrados </response>
         [AllowAnonymous]
         [HttpGet("user/{id:int}")]
+        [ProducesResponseTypeAttribute(typeof(EstruturaResponse), StatusCodes.Status200OK)]
+        [ProducesResponseTypeAttribute(typeof(EstruturaResponse), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetByIdAsync([FromRoute] int id)
         {
             try
             {
                 var hero = this.Mapper.Map<UserViewModel>(await this.UserRepository.GetByIdAsync(id));
 
-                if (hero == null)
-                {
-                    return NotFound(new
-                    {
-                        status = StatusCodes.Status404NotFound,
-                        message = "User not found",
-                        data = new object()
-                    });
-                }
+                if (hero != null) return ResponseOk(hero);
 
-                return Ok(new
-                {
-                    status = StatusCodes.Status200OK,
-                    message = "User successfully found",
-                    data = hero
-                });
+                return ResponseNotFound("O Usuário não foi encontrado!");
             }
             catch (Exception ex)
             {
-                return BadRequest(new
-                {
-                    status = StatusCodes.Status400BadRequest,
-                    message = ex.Message,
-                    data = new object()
-                });
+                return ResponseBadRequest(ex.Message);
             }
         }
 
@@ -96,9 +71,14 @@ namespace App_Tour_Of_Heroes_Apresentation.Controllers
         /// </summary>
         /// <param name="userName"></param>
         /// <param name="password"></param>
-        /// <param name="role"></param>     
+        /// <param name="role"></param>   
+        /// <returns> retorna o usuário cadastrado </returns>
+        /// <response code="200"> usuário cadastrado</response>        
+        /// <response code="404"> Não foi possivel cadastrar o usuário </response>
         [HttpPost("create-user")]
-        public async Task<IActionResult> CreateAsync(string userName,  string password, string role)
+        [ProducesResponseTypeAttribute(typeof(EstruturaResponse), StatusCodes.Status200OK)]
+        [ProducesResponseTypeAttribute(typeof(EstruturaResponse), StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> CreateAsync(string userName, string password, string role)
         {
             try
             {
@@ -106,109 +86,66 @@ namespace App_Tour_Of_Heroes_Apresentation.Controllers
 
                 var createUser = await this.UserRepository.CreateAsync(this.Mapper.Map<User>(newUser));
 
-                if (createUser != 1)
-                {
-                    return BadRequest(new
-                    {
-                        status = StatusCodes.Status400BadRequest,
-                        message = "it was not possible to register the User",
-                        data = new object()
-                    });
-                }
+                if (createUser == 1) return ResponseCreated("O Usuário foi criado com sucesso!");
 
-                return Ok(new
-                {
-                    status = StatusCodes.Status201Created,
-                    message = "User created successfully",
-                    data = newUser
-                });
+                return ResponseNoContent();
+
             }
             catch (Exception ex)
             {
-                return BadRequest(new
-                {
-                    status = StatusCodes.Status400BadRequest,
-                    message = ex.Message,
-                    data = new object()
-                });
+                return ResponseBadRequest(ex.Message);
             }
         }
 
         /// <summary>
         /// Update a User
         /// </summary>
-        /// <param name="model"></param>       
+        /// <param name="model"></param>  
+        /// <returns> Retorna o usuário atualizado </returns>
+        /// <response code="200"> Retorna o usuário atualizado </response>        
+        /// <response code="404"> O usuário não está cadastrado </response>
         [HttpPut("update-user")]
+        [ProducesResponseTypeAttribute(typeof(EstruturaResponse), StatusCodes.Status200OK)]
+        [ProducesResponseTypeAttribute(typeof(EstruturaResponse), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> UpdateAsync([FromQuery] UserViewModel model)
         {
             try
             {
                 var updateHero = await this.UserRepository.UpdateAsync(this.Mapper.Map<User>(model));
 
-                if (updateHero != 1)
-                {
-                    return NotFound(new
-                    {
-                        status = StatusCodes.Status404NotFound,
-                        message = "could not update User.",
-                        data = new object()
-                    });
-                }
+                if (updateHero == 1) return ResponseOk("O Usuário foi alterado com sucesso!");
 
-                return Ok(new
-                {
-                    status = StatusCodes.Status200OK,
-                    message = "User successfully updated",
-                    data = model
-                });
+                return ResponseNotModified();
             }
             catch (Exception ex)
             {
-                return BadRequest(new
-                {
-                    status = StatusCodes.Status400BadRequest,
-                    message = ex.Message,
-                    data = new object()
-                });
+                return ResponseBadRequest(ex.Message);
             }
         }
 
         /// <summary>
         /// Remove a hero
         /// </summary>
-        /// <param name="id"></param>      
+        /// <param name="id"></param>  
+        /// <returns> retorna o identificador do usuário deletado </returns>
+        /// <response code="200"> Retorna o identificados </response>        
+        /// <response code="404"> O usuário não está cadastrado </response>
         [HttpDelete("delete-user/{id:int}")]
+        [ProducesResponseTypeAttribute(typeof(EstruturaResponse), StatusCodes.Status200OK)]
+        [ProducesResponseTypeAttribute(typeof(EstruturaResponse), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteAsync([FromRoute] int id)
         {
             try
             {
                 var deleteHero = await this.UserRepository.DeleteAsync(this.Mapper.Map<User>(new UserViewModel { Id = id }));
 
-                if (deleteHero != 1)
-                {
-                    return NotFound(new
-                    {
-                        status = StatusCodes.Status404NotFound,
-                        message = "could not delete User.",
-                        data = new object()
-                    });
-                }
+                if (deleteHero == 1) return ResponseOk("O Usuário foi deletado com sucesso!");
 
-                return Ok(new
-                {
-                    status = StatusCodes.Status200OK,
-                    message = "User successfully deleted",
-                    data = id
-                });
+                return ResponseNotFound("Não foi encontrado o usuário");
             }
             catch (Exception ex)
             {
-                return BadRequest(new
-                {
-                    status = StatusCodes.Status400BadRequest,
-                    message = ex.Message,
-                    data = new object()
-                });
+                return ResponseBadRequest(ex.Message);
             }
         }
 

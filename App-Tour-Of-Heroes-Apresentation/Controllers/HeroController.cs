@@ -13,10 +13,15 @@ namespace App_Tour_Of_Heroes_Apresentation.Controllers
         { }
 
         /// <summary>
-        /// Returns a list of heroes
-        /// </summary>       
+        /// Obter todos os hérois
+        /// </summary>   
+        /// <returns> retorna uma lista de hérois </returns>
+        /// <response code="200"> retorna os hérois encontrados </response>        
+        /// <response code="404"> Há lista de hérois esta vazia </response>
         [AllowAnonymous]
         [HttpGet("heroes-list")]
+        [ProducesResponseTypeAttribute(StatusCodes.Status200OK)]
+        [ProducesResponseTypeAttribute(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetAllAsync()
         {
             try
@@ -52,11 +57,16 @@ namespace App_Tour_Of_Heroes_Apresentation.Controllers
         }
 
         /// <summary>
-        /// Returns a hero by id
+        /// Obter um héroi por identificador
         /// </summary>
-        /// <param name="id"></param>      
+        /// <param name="id"></param>    
+        /// <returns> retorna um héroi expecifico </returns>
+        /// <response code="200"> retorna o héroi </response>        
+        /// <response code="404"> O héroi não foi encontrado </response>
         [AllowAnonymous]
         [HttpGet("hero/{id:int}")]
+        [ProducesResponseTypeAttribute(StatusCodes.Status200OK)]
+        [ProducesResponseTypeAttribute(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetByIdAsync([FromRoute] int id)
         {
             try
@@ -94,8 +104,13 @@ namespace App_Tour_Of_Heroes_Apresentation.Controllers
         /// <summary>
         /// create a hero
         /// </summary>
-        /// <param name="name"></param>      
+        /// <param name="name"></param>    
+        /// <returns> retorna o héroi criado </returns>
+        /// <response code="200"> retorna o héroi criado </response>        
+        /// <response code="404"> O héroi não foi criado </response>
         [HttpPost("create-hero")]
+        [ProducesResponseTypeAttribute(StatusCodes.Status200OK)]
+        [ProducesResponseTypeAttribute(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> CreateAsync([FromQuery] string name)
         {
             try
@@ -135,8 +150,13 @@ namespace App_Tour_Of_Heroes_Apresentation.Controllers
         /// <summary>
         /// Update a hero
         /// </summary>
-        /// <param name="model"></param>       
+        /// <param name="model"></param> 
+        /// <returns> retorna o héroi atualizado </returns>
+        /// <response code="200"> retorna o héroi atualizado </response>        
+        /// <response code="404"> O héroi não foi encontrado </response>
         [HttpPut("update-hero")]
+        [ProducesResponseTypeAttribute(StatusCodes.Status200OK)]
+        [ProducesResponseTypeAttribute(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> UpdateAsync([FromQuery] HeroViewModel model)
         {
             try
@@ -172,10 +192,15 @@ namespace App_Tour_Of_Heroes_Apresentation.Controllers
         }
 
         /// <summary>
-        /// Remove a hero
+        /// remove um héroi da lista
         /// </summary>
-        /// <param name="id"></param>       
+        /// <param name="id"></param>    
+        /// <returns> O identificador do héroi removido </returns>
+        /// <response code="200"> héroi removido com sucesso </response>        
+        /// <response code="404"> Não foi encontrado o héroi </response>
         [HttpDelete("delete-hero/{id:int}")]
+        [ProducesResponseTypeAttribute(StatusCodes.Status200OK)]
+        [ProducesResponseTypeAttribute(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteAsync([FromRoute] int id)
         {
             try

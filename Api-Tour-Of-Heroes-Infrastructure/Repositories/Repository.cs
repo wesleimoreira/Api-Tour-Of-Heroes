@@ -1,13 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Api_Tour_Of_Heroes_Domain.Data;
+﻿using Api_Tour_Of_Heroes_Domain.Data;
 using Api_Tour_Of_Heroes_Domain.Entities;
 using Api_Tour_Of_Heroes_Domain.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace Api_Tour_Of_Heroes_Infrastructure.Repositories
 {
     public abstract class Repository<TEntity> : IRepository<TEntity> where TEntity : Entity
     {
-        private readonly DataContext _context;
+        protected readonly DataContext _context;
 
         public Repository(DataContext context)
         {

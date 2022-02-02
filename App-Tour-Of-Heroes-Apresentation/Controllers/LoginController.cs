@@ -13,47 +13,31 @@ namespace App_Tour_Of_Heroes_Apresentation.Controllers
         public LoginController(IUserRepository userRepository, IHeroRepository heroRepository, IMapper mapper) : base(userRepository, heroRepository, mapper)
         { }
 
-
+        /// <summary>
+        /// Returns a list of User
+        /// </summary>      
+        /// <returns> Retorna o token para autenticação </returns>
+        /// <response code="200"> Retorna um token </response>        
+        /// <response code="404"> Não possui o usuário </response>
         [AllowAnonymous]
-        [HttpPost("authentication")]       
-        public async Task<ActionResult<dynamic>> AuthenticateAsync([FromBody] UserViewModel model)
+        [HttpPost("authentication")]
+        [ProducesResponseTypeAttribute(typeof(EstruturaResponse), StatusCodes.Status200OK)]
+        [ProducesResponseTypeAttribute(typeof(EstruturaResponse), StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> AuthenticateAsync(string userName, string password)
         {
             try
             {
-                var user = await this.UserRepository.GetByIdAsync(model.Id);
+                var user = await this.UserRepository.GetParameter(x => x.UserName == userName && x.Password == password);
 
-                if (user == null)
-                {
-                    return NotFound(new
-                    {
-                        status = StatusCodes.Status404NotFound,
-                        message = "User not found",
-                        data = new object(),
-                        token = string.Empty
-                    });
-                }
+                if (user is null) return ResponseNotFound("O Usuário/Senha estão errados!");
 
-                var token = TokenService.GenerateToken(this.Mapper.Map<User>(user));
+                var token = TokenService.GenerateToken(user);               
 
-                user.Password = string.Empty;
-
-                return Ok(new
-                {
-                    status = StatusCodes.Status200OK,
-                    message = "User successfully found",
-                    data = user,
-                    token
-                });
+                return ResponseOk(token);
             }
             catch (Exception ex)
             {
-                return BadRequest(new
-                {
-                    status = StatusCodes.Status400BadRequest,
-                    message = ex.Message,
-                    data = new object(),
-                    token = string.Empty
-                });
+                return ResponseBadRequest(ex.Message);
             }
         }
     }
