@@ -1,9 +1,10 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
+﻿using Api_Tour_Of_Heroes_Application.ViewModels;
 using Api_Tour_Of_Heroes_Domain.Entities;
-using Microsoft.AspNetCore.Authorization;
 using Api_Tour_Of_Heroes_Domain.Interfaces;
-using Api_Tour_Of_Heroes_Application.ViewModels;
+using App_Tour_Of_Heroes_Apresentation.Extensions;
+using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace App_Tour_Of_Heroes_Apresentation.Controllers
 {
@@ -20,39 +21,21 @@ namespace App_Tour_Of_Heroes_Apresentation.Controllers
         /// <response code="404"> Há lista de hérois esta vazia </response>
         [AllowAnonymous]
         [HttpGet("heroes-list")]
-        [ProducesResponseTypeAttribute(StatusCodes.Status200OK)]
-        [ProducesResponseTypeAttribute(StatusCodes.Status404NotFound)]
+        [EstruturaRetorno(StatusCodes.Status200OK)]
+        [EstruturaRetorno(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetAllAsync()
         {
             try
             {
                 var listOfHeroes = this.Mapper.Map<List<HeroViewModel>>(await this.HeroRepository.GetAllAsync());
 
-                if (listOfHeroes.Count == 0 || listOfHeroes == null)
-                {
-                    return NotFound(new
-                    {
-                        status = StatusCodes.Status404NotFound,
-                        message = "Hero list not found.",
-                        data = Array.Empty<HeroViewModel>()
-                    });
-                }
+                if (listOfHeroes.Count > 0) ResponseOk(listOfHeroes);
 
-                return Ok(new
-                {
-                    status = StatusCodes.Status200OK,
-                    message = "list of heroes successfully found.",
-                    data = listOfHeroes
-                });
+                return ResponseNotFound("Não foi encontrado Héroi registrado!");
             }
             catch (Exception ex)
             {
-                return BadRequest(new
-                {
-                    status = StatusCodes.Status400BadRequest,
-                    message = ex.Message,
-                    data = Array.Empty<HeroViewModel>()
-                });
+                return ResponseBadRequest(ex.Message);
             }
         }
 
@@ -65,39 +48,21 @@ namespace App_Tour_Of_Heroes_Apresentation.Controllers
         /// <response code="404"> O héroi não foi encontrado </response>
         [AllowAnonymous]
         [HttpGet("hero/{id:int}")]
-        [ProducesResponseTypeAttribute(StatusCodes.Status200OK)]
-        [ProducesResponseTypeAttribute(StatusCodes.Status404NotFound)]
+        [EstruturaRetorno(StatusCodes.Status200OK)]
+        [EstruturaRetorno(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetByIdAsync([FromRoute] int id)
         {
             try
             {
                 var hero = this.Mapper.Map<HeroViewModel>(await this.HeroRepository.GetByIdAsync(id));
 
-                if (hero == null)
-                {
-                    return NotFound(new
-                    {
-                        status = StatusCodes.Status404NotFound,
-                        message = "hero not found",
-                        dado = new object()
-                    });
-                }
+                if (hero != null) ResponseOk(hero);
 
-                return Ok(new
-                {
-                    status = StatusCodes.Status200OK,
-                    message = "hero successfully found",
-                    dado = hero
-                });
+                return ResponseNotFound("Não foi encontrado o Héroi!");
             }
             catch (Exception ex)
             {
-                return BadRequest(new
-                {
-                    status = StatusCodes.Status400BadRequest,
-                    message = ex.Message,
-                    dado = new object()
-                });
+                return ResponseBadRequest(ex.Message);
             }
         }
 
@@ -109,8 +74,8 @@ namespace App_Tour_Of_Heroes_Apresentation.Controllers
         /// <response code="200"> retorna o héroi criado </response>        
         /// <response code="404"> O héroi não foi criado </response>
         [HttpPost("create-hero")]
-        [ProducesResponseTypeAttribute(StatusCodes.Status200OK)]
-        [ProducesResponseTypeAttribute(StatusCodes.Status404NotFound)]
+        [EstruturaRetorno(StatusCodes.Status200OK)]
+        [EstruturaRetorno(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> CreateAsync([FromQuery] string name)
         {
             try
@@ -119,31 +84,13 @@ namespace App_Tour_Of_Heroes_Apresentation.Controllers
 
                 var createHero = await this.HeroRepository.CreateAsync(this.Mapper.Map<Hero>(newHero));
 
-                if (createHero != 1)
-                {
-                    return BadRequest(new
-                    {
-                        status = StatusCodes.Status400BadRequest,
-                        message = "it was not possible to register the hero",
-                        dado = new object()
-                    });
-                }
+                if (createHero == 1) return ResponseOk("O Héroi foi criado com sucesso!");
 
-                return Ok(new
-                {
-                    status = StatusCodes.Status201Created,
-                    message = "hero created successfully",
-                    dado = newHero
-                });
+                return ResponseNotFound("Não foi possivel criar um novo héroi!");
             }
             catch (Exception ex)
             {
-                return BadRequest(new
-                {
-                    status = StatusCodes.Status400BadRequest,
-                    message = ex.Message,
-                    dado = new object()
-                });
+                return ResponseBadRequest(ex.Message);
             }
         }
 
@@ -155,39 +102,21 @@ namespace App_Tour_Of_Heroes_Apresentation.Controllers
         /// <response code="200"> retorna o héroi atualizado </response>        
         /// <response code="404"> O héroi não foi encontrado </response>
         [HttpPut("update-hero")]
-        [ProducesResponseTypeAttribute(StatusCodes.Status200OK)]
-        [ProducesResponseTypeAttribute(StatusCodes.Status404NotFound)]
+        [EstruturaRetorno(StatusCodes.Status200OK)]
+        [EstruturaRetorno(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> UpdateAsync([FromQuery] HeroViewModel model)
         {
             try
             {
                 var updateHero = await this.HeroRepository.UpdateAsync(this.Mapper.Map<Hero>(model));
 
-                if (updateHero != 1)
-                {
-                    return NotFound(new
-                    {
-                        status = StatusCodes.Status404NotFound,
-                        message = "could not update hero.",
-                        dado = new object()
-                    });
-                }
+                if (updateHero == 1) return ResponseOk("O Héroi foi atualizado com sucesso!");
 
-                return Ok(new
-                {
-                    status = StatusCodes.Status200OK,
-                    message = "hero successfully updated",
-                    dado = model
-                });
+                return ResponseNotFound("O Héroi não foi encontrado!");
             }
             catch (Exception ex)
             {
-                return BadRequest(new
-                {
-                    status = StatusCodes.Status400BadRequest,
-                    message = ex.Message,
-                    dado = new object()
-                });
+                return ResponseBadRequest(ex.Message);
             }
         }
 
@@ -199,41 +128,21 @@ namespace App_Tour_Of_Heroes_Apresentation.Controllers
         /// <response code="200"> héroi removido com sucesso </response>        
         /// <response code="404"> Não foi encontrado o héroi </response>
         [HttpDelete("delete-hero/{id:int}")]
-        [ProducesResponseTypeAttribute(StatusCodes.Status200OK)]
-        [ProducesResponseTypeAttribute(StatusCodes.Status404NotFound)]
+        [EstruturaRetorno(StatusCodes.Status200OK)]
+        [EstruturaRetorno(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteAsync([FromRoute] int id)
         {
             try
             {
-                var deleteHero = new HeroViewModel { Id = id };
+                var isDeleteHero = await this.HeroRepository.DeleteAsync(await this.HeroRepository.GetByIdAsync(id));
 
-                var isDeleteHero = await this.HeroRepository.DeleteAsync(this.Mapper.Map<Hero>(deleteHero));
+                if (isDeleteHero == 1) return ResponseOk("Héroi removido com sucesso!");
 
-                if (isDeleteHero != 1)
-                {
-                    return NotFound(new
-                    {
-                        status = StatusCodes.Status404NotFound,
-                        message = "could not delete hero.",
-                        dado = new object()
-                    });
-                }
-
-                return Ok(new
-                {
-                    status = StatusCodes.Status200OK,
-                    message = "hero successfully deleted",
-                    dado = deleteHero
-                });
+                return ResponseNotFound("O Héroi não foi encontrado!");
             }
             catch (Exception ex)
             {
-                return BadRequest(new
-                {
-                    status = StatusCodes.Status400BadRequest,
-                    message = ex.Message,
-                    dado = new object()
-                });
+                return ResponseBadRequest(ex.Message);
             }
         }
     }

@@ -1,6 +1,7 @@
 ﻿using Api_Tour_Of_Heroes_Application.ViewModels;
 using Api_Tour_Of_Heroes_Domain.Entities;
 using Api_Tour_Of_Heroes_Domain.Interfaces;
+using App_Tour_Of_Heroes_Apresentation.Extensions;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -20,8 +21,8 @@ namespace App_Tour_Of_Heroes_Apresentation.Controllers
         /// <response code="404"> Não possui usuários cadastrados </response>
         [AllowAnonymous]
         [HttpGet("user-list")]
-        [ProducesResponseTypeAttribute(typeof(EstruturaResponse), StatusCodes.Status200OK)]
-        [ProducesResponseTypeAttribute(typeof(EstruturaResponse), StatusCodes.Status404NotFound)]
+        [EstruturaRetorno(StatusCodes.Status200OK)]
+        [EstruturaRetorno(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetAllAsync()
         {
             try
@@ -48,8 +49,8 @@ namespace App_Tour_Of_Heroes_Apresentation.Controllers
         /// <response code="404"> Não possui usuários cadastrados </response>
         [AllowAnonymous]
         [HttpGet("user/{id:int}")]
-        [ProducesResponseTypeAttribute(typeof(EstruturaResponse), StatusCodes.Status200OK)]
-        [ProducesResponseTypeAttribute(typeof(EstruturaResponse), StatusCodes.Status404NotFound)]
+        [EstruturaRetorno(StatusCodes.Status200OK)]
+        [EstruturaRetorno(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetByIdAsync([FromRoute] int id)
         {
             try
@@ -76,8 +77,8 @@ namespace App_Tour_Of_Heroes_Apresentation.Controllers
         /// <response code="200"> usuário cadastrado</response>        
         /// <response code="404"> Não foi possivel cadastrar o usuário </response>
         [HttpPost("create-user")]
-        [ProducesResponseTypeAttribute(typeof(EstruturaResponse), StatusCodes.Status200OK)]
-        [ProducesResponseTypeAttribute(typeof(EstruturaResponse), StatusCodes.Status404NotFound)]
+        [EstruturaRetorno(StatusCodes.Status200OK)]
+        [EstruturaRetorno(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> CreateAsync(string userName, string password, string role)
         {
             try
@@ -105,8 +106,8 @@ namespace App_Tour_Of_Heroes_Apresentation.Controllers
         /// <response code="200"> Retorna o usuário atualizado </response>        
         /// <response code="404"> O usuário não está cadastrado </response>
         [HttpPut("update-user")]
-        [ProducesResponseTypeAttribute(typeof(EstruturaResponse), StatusCodes.Status200OK)]
-        [ProducesResponseTypeAttribute(typeof(EstruturaResponse), StatusCodes.Status404NotFound)]
+        [EstruturaRetorno(StatusCodes.Status200OK)]
+        [EstruturaRetorno(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> UpdateAsync([FromQuery] UserViewModel model)
         {
             try
@@ -131,8 +132,8 @@ namespace App_Tour_Of_Heroes_Apresentation.Controllers
         /// <response code="200"> Retorna o identificados </response>        
         /// <response code="404"> O usuário não está cadastrado </response>
         [HttpDelete("delete-user/{id:int}")]
-        [ProducesResponseTypeAttribute(typeof(EstruturaResponse), StatusCodes.Status200OK)]
-        [ProducesResponseTypeAttribute(typeof(EstruturaResponse), StatusCodes.Status404NotFound)]
+        [EstruturaRetorno(StatusCodes.Status200OK)]
+        [EstruturaRetorno(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteAsync([FromRoute] int id)
         {
             try
